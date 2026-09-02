@@ -36,7 +36,7 @@ export function Nav() {
           href="#contact"
           className="rounded-full border border-foreground/25 px-4 py-1.5 text-[0.62rem] tracking-[0.26em] text-foreground transition-colors hover:bg-foreground hover:text-background md:hidden"
         >
-          MENU
+          CONTACT
         </a>
       </nav>
     </header>
