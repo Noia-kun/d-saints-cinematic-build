@@ -452,7 +452,15 @@ function Favorites() {
   );
 }
 
-const comforts = [
+type Comfort = {
+  name: string;
+  price: string[];
+  note?: string;
+  img?: string;
+  alt?: string;
+};
+
+const comforts: Comfort[] = [
   { name: "Roasted Banana Loaf", price: ["40 QAR"], img: bananaLoaf, alt: "Sliced roasted banana loaf on parchment" },
   {
     name: "Classic Brownies",
