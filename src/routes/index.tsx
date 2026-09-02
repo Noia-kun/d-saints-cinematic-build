@@ -220,7 +220,7 @@ function SignatureCollection() {
   const ref = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
-  const x = useTransform(scrollYProgress, [0.1, 0.9], ["0%", reduced ? "0%" : "-50%"]);
+  const x = useTransform(scrollYProgress, [0.1, 0.9], ["0%", "-50%"]);
 
   const items = [
     {
