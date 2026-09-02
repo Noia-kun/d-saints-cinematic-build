@@ -1,24 +1,680 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useRef, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
+import { Nav } from "@/components/site/nav";
+import { Reveal, StaggerList, ProductImage } from "@/components/site/reveal";
+import { Signature, SIGNATURE } from "@/components/site/signature";
+
+import heroImg from "@/assets/hero.jpg";
+import story1 from "@/assets/story-1.jpg";
+import story2 from "@/assets/story-2.jpg";
+import story3 from "@/assets/story-3.jpg";
+import silvanasImg from "@/assets/silvanas.jpg";
+import ensaymadaImg from "@/assets/ensaymada.jpg";
+import chocolateCakeImg from "@/assets/chocolate-cake.jpg";
+import sansrivalImg from "@/assets/sansrival.jpg";
+import cookieClassic from "@/assets/cookie-classic.jpg";
+import cookieDark from "@/assets/cookie-dark.jpg";
+import cookieScarlet from "@/assets/cookie-scarlet.jpg";
+import cookiePistachio from "@/assets/cookie-pistachio.jpg";
+import cookieBerry from "@/assets/cookie-berry.jpg";
+import bananaLoaf from "@/assets/banana-loaf.jpg";
+import browniesImg from "@/assets/brownies.jpg";
+import oatBars from "@/assets/oat-bars.jpg";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "D'SAINTS — A Moment Worth Sharing | Filipino Desserts, Doha" },
+      {
+        name: "description",
+        content:
+          "D'SAINTS crafts Filipino artisan desserts in Doha, Qatar — silvanas, ensaymada, sans rival, brownies and cookies. Est. 2020.",
+      },
+      {
+        property: "og:title",
+        content: "D'SAINTS — A Moment Worth Sharing",
+      },
+      {
+        property: "og:description",
+        content:
+          "Filipino artisan desserts in Doha, Qatar. Silvanas, ensaymada, specialty cakes and cookies.",
+      },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
+const label = "label-wide";
+
+function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", reduced ? "0%" : "14%"]);
+  const fade = useTransform(scrollYProgress, [0, 0.8], [1, reduced ? 1 : 0.25]);
+
+  return (
+    <section
+      id="top"
+      ref={ref}
+      className="grain relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-ivory px-6 pt-28 pb-16 text-center"
+    >
+      <motion.img
+        src={heroImg}
+        alt="A table of Filipino desserts in warm morning light"
+        width={1600}
+        height={1100}
+        style={{ y }}
+        className="pointer-events-none absolute inset-0 h-[115%] w-full object-cover opacity-25"
+      />
+      <motion.div style={{ opacity: fade }} className="relative z-[2] max-w-4xl">
+        <motion.p
+          className={label}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.15 }}
+        >
+          EST. D&apos;SAINTS 2020
+        </motion.p>
+
+        <motion.h1
+          className="mt-8 font-display text-[19vw] leading-[0.82] font-light tracking-[0.02em] text-foreground sm:text-[15vw] lg:text-[11rem]"
+          initial={reduced ? { opacity: 0 } : { opacity: 0, scale: 1.08, y: 18 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ duration: 1.6, delay: 0.35, ease: [0.19, 1, 0.22, 1] }}
+        >
+          D&apos;SAINTS
+        </motion.h1>
+
+        <motion.p
+          className="mx-auto mt-8 max-w-xl text-lg text-espresso italic sm:text-2xl"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.1, delay: 1.05 }}
+          style={{ fontFamily: "var(--font-display)" }}
+        >
+          {SIGNATURE}
+        </motion.p>
+
+        <motion.p
+          className={`mt-12 ${label}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.5 }}
+        >
+          DOHA, QATAR
+        </motion.p>
+      </motion.div>
+    </section>
+  );
+}
+
+function FirstMoment() {
+  return (
+    <section className="bg-cream px-6 py-28 sm:py-40">
+      <div className="mx-auto max-w-4xl text-center">
+        <Reveal as="h2" className="font-display text-3xl leading-tight sm:text-5xl">
+          WHAT MAKES A MOMENT MEMORABLE?
+        </Reveal>
+        <StaggerList
+          className="mt-14 space-y-5"
+          lineClassName="font-display text-2xl text-espresso sm:text-4xl"
+          lines={["A familiar taste.", "A table full of people.", "Something worth bringing home."]}
+        />
+        <Reveal delay={0.4} className="mt-16">
+          <Signature className="text-base sm:text-lg" />
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function Story() {
+  return (
+    <section id="story" className="bg-ivory px-6 py-28 sm:py-40">
+      <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-12 lg:gap-10">
+        <div className="lg:col-span-5 lg:pt-10">
+          <Reveal as="h2" className="font-display text-5xl tracking-[0.06em] sm:text-7xl">
+            D&apos;SAINTS
+          </Reveal>
+          <Reveal delay={0.15} className="mt-8 max-w-md text-base leading-relaxed text-espresso">
+            <p>
+              D&apos;SAINTS has always been about connecting lives, one moment at a time. It&apos;s
+              about hospitality, empowering purpose, and making space for everyone at the table.
+            </p>
+          </Reveal>
+          <Reveal delay={0.3} className="mt-10">
+            <div className="hairline max-w-[8rem]" />
+          </Reveal>
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:col-span-7">
+          <Reveal className="col-span-1 row-span-2 self-start">
+            <img
+              src={story1}
+              alt="Hands passing a plate of dessert across a shared table"
+              width={900}
+              height={1200}
+              loading="lazy"
+              className="w-full object-cover"
+            />
+          </Reveal>
+          <Reveal delay={0.15} className="col-span-1 mt-10">
+            <img
+              src={story2}
+              alt="A dessert box being opened, pastries inside"
+              width={1200}
+              height={900}
+              loading="lazy"
+              className="w-full object-cover"
+            />
+          </Reveal>
+          <Reveal delay={0.3} className="col-span-1 pr-8">
+            <img
+              src={story3}
+              alt="Coffee cups and crumbs left on the table after a gathering"
+              width={1000}
+              height={1000}
+              loading="lazy"
+              className="w-full object-cover"
+            />
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Philosophy() {
+  return (
+    <section className="grain bg-chocolate px-6 py-32 text-ivory sm:py-48">
+      <div className="mx-auto max-w-4xl">
+        <Reveal direction="up" as="h2" className="font-display text-4xl leading-tight sm:text-6xl">
+          Not everything perfect is planned.
+        </Reveal>
+        <Reveal
+          direction="left"
+          delay={0.15}
+          className="mt-10 max-w-2xl font-display text-2xl leading-snug text-cream/85 sm:text-3xl"
+        >
+          <p>
+            Because sometimes, the best recipes come from letting go, letting mistakes happen.
+          </p>
+        </Reveal>
+        <Reveal direction="right" delay={0.3} className="mt-10">
+          <p className="text-sm tracking-[0.3em] text-cream/70">— D&apos;SAINTS</p>
+        </Reveal>
+        <Reveal delay={0.5} className="mt-20">
+          <span className="signature-line text-sm text-cream/60">{SIGNATURE}</span>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function SignatureCollection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduced = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const x = useTransform(scrollYProgress, [0.1, 0.9], ["0%", reduced ? "0%" : "-50%"]);
+
+  const items = [
+    {
+      name: "Silvanas",
+      img: silvanasImg,
+      alt: "Stacked silvanas with buttercream and crisp meringue",
+      copy: "A PHILIPPINE ARTISAN DELICACY OF CRISP MERINGUE AND BUTTERCREAM, A SIGNATURE FROZEN FINISH THAT MELTS INTO NOSTALGIA.",
+      price: ["55 QAR"],
+    },
+    {
+      name: "Ensaymada",
+      img: ensaymadaImg,
+      alt: "Ensaymada topped with buttercream and grated cheese",
+      copy: "PHILIPPINE ARTISAN STAPLE WITH BUTTERY CREAM, AND A LAYER OF CHEESE — FAMILIAR, CLOSE TO HOME.",
+      price: ["12 pcs / 60 QAR", "6 pcs / 35 QAR"],
+    },
+  ];
+
+  return (
+    <section id="signature" className="bg-cream">
+      {/* Desktop: sticky horizontal pan between the two signatures */}
+      <div ref={ref} className="relative hidden h-[240vh] lg:block">
+        <div className="sticky top-0 flex h-screen flex-col justify-center overflow-hidden">
+          <p className={`${label} px-10 pb-10`}>S I G N A T U R E</p>
+          <motion.div style={{ x }} className="flex w-[200%]">
+            {items.map((it) => (
+              <article key={it.name} className="flex w-1/2 items-center gap-12 px-10">
+                <img
+                  src={it.img}
+                  alt={it.alt}
+                  width={1200}
+                  height={1400}
+                  loading="lazy"
+                  className="h-[58vh] w-1/2 object-cover"
+                />
+                <div className="w-1/2">
+                  <h3 className="font-display text-6xl">{it.name}</h3>
+                  <p className="mt-6 max-w-md text-xs leading-relaxed tracking-[0.14em] text-espresso">
+                    {it.copy}
+                  </p>
+                  <ul className="mt-8 space-y-1 text-sm tracking-[0.16em] text-foreground">
+                    {it.price.map((p) => (
+                      <li key={p}>{p}</li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            ))}
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Mobile / tablet: stacked */}
+      <div className="px-6 py-24 lg:hidden">
+        <p className={label}>S I G N A T U R E</p>
+        <div className="mt-12 space-y-20">
+          {items.map((it) => (
+            <article key={it.name}>
+              <ProductImage
+                src={it.img}
+                alt={it.alt}
+                width={1200}
+                height={1400}
+                className="w-full object-cover"
+              />
+              <h3 className="mt-8 font-display text-4xl">{it.name}</h3>
+              <p className="mt-4 text-xs leading-relaxed tracking-[0.14em] text-espresso">
+                {it.copy}
+              </p>
+              <ul className="mt-6 space-y-1 text-sm tracking-[0.16em]">
+                {it.price.map((p) => (
+                  <li key={p}>{p}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Cakes() {
+  return (
+    <section id="cakes" className="bg-ivory px-6 py-28 sm:py-40">
+      <div className="mx-auto max-w-6xl">
+        <p className={label}>S P E C I A L T Y&nbsp;&nbsp;C A K E S</p>
+
+        <div className="mt-16 grid gap-20 md:grid-cols-2 md:gap-12">
+          <article>
+            <ProductImage
+              src={chocolateCakeImg}
+              alt="Slice of rich layered chocolate cake with glossy ganache"
+              width={1200}
+              height={1400}
+              className="aspect-4/5 w-full object-cover"
+            />
+            <h3 className="mt-8 font-display text-4xl sm:text-5xl">Chocolate Dream Cake</h3>
+            <p className="mt-5 max-w-md text-xs leading-relaxed tracking-[0.14em] text-espresso">
+              A RICH CHOCOLATE INDULGENCE WITH LAYERS OF TEXTURE, BALANCING SILKY, CREAMY, AND CRISP
+              IN EVERY BITE.
+            </p>
+            <p className="mt-6 text-sm tracking-[0.2em]">65 / 25 / 120 QAR</p>
+          </article>
+
+          <article className="md:pt-24">
+            <ProductImage
+              src={sansrivalImg}
+              alt="Sans rival cake with cashew meringue layers and roasted cashews"
+              width={1200}
+              height={1400}
+              className="aspect-4/5 w-full object-cover"
+            />
+            <h3 className="mt-8 font-display text-4xl sm:text-5xl">Sansrival Cake</h3>
+            <p className="mt-5 max-w-md text-xs leading-relaxed tracking-[0.14em] text-espresso">
+              DELICATE LAYERS OF CASHEW MERINGUE AND BUTTERCREAM, FINISHED WITH ROASTED CASHEWS. A
+              FILIPINO CLASSIC WITHOUT RIVAL.
+            </p>
+            <p className="mt-6 text-sm tracking-[0.2em]">70 / 45 / 150 QAR</p>
+            <Reveal delay={0.2} className="mt-8 border-l border-accent pl-5">
+              <p className="font-display text-xl italic text-espresso">
+                Did you know? Sans Rival means &ldquo;without rival.&rdquo;
+              </p>
+            </Reveal>
+          </article>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const flavors = [
+  {
+    name: "Classic Chocolate Chip",
+    img: cookieClassic,
+    alt: "Chocolate chip cookies with walnuts",
+    desc: "Semi-sweet & dark chocolate, crunchy walnuts.",
+  },
+  {
+    name: "Dark Squared",
+    img: cookieDark,
+    alt: "Dark cocoa cookies with melted chocolate",
+    desc: "Cocoa dough, semi-sweet & dark chocolate.",
+  },
+  {
+    name: "Scarlet Red",
+    img: cookieScarlet,
+    alt: "Red velvet cookie with a cheesecake center",
+    desc: "White chocolate, creamy cheesecake center.",
+  },
+  {
+    name: "Pistachio Nut",
+    img: cookiePistachio,
+    alt: "Cookie with a creamy pistachio center",
+    desc: "Hazelnut, white chocolate, creamy pistachio center.",
+  },
+  {
+    name: "Berry Berry",
+    img: cookieBerry,
+    alt: "Cranberry and white chocolate cookies",
+    desc: "Cranberries, white chocolate, lemon zest.",
+  },
+];
+
+function Favorites() {
+  const [active, setActive] = useState(0);
+  const flavor = flavors[active]!;
+
+  return (
+    <section id="favorites" className="bg-cream px-6 py-28 sm:py-40">
+      <div className="mx-auto max-w-6xl">
+        <p className={label}>F A V O R I T E S</p>
+        <Reveal as="h2" className="mt-8 font-display text-5xl sm:text-7xl">
+          NEW YORK COOKIES
+        </Reveal>
+        <p className="mt-5 text-sm tracking-[0.2em] text-espresso">
+          Solo 12 QAR · 3 pcs 35 QAR · 5 pcs 55 QAR
+        </p>
+
+        <div className="mt-16 grid gap-12 md:grid-cols-2 md:items-center">
+          <div className="overflow-hidden bg-beige/40">
+            <motion.img
+              key={flavor.img}
+              src={flavor.img}
+              alt={flavor.alt}
+              width={1000}
+              height={1000}
+              loading="lazy"
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="aspect-square w-full object-cover"
+            />
+          </div>
+
+          <div>
+            <ul className="divide-y divide-border">
+              {flavors.map((f, i) => (
+                <li key={f.name}>
+                  <button
+                    type="button"
+                    onClick={() => setActive(i)}
+                    onMouseEnter={() => setActive(i)}
+                    onFocus={() => setActive(i)}
+                    aria-pressed={i === active}
+                    className={`w-full py-5 text-left transition-colors ${
+                      i === active ? "text-foreground" : "text-muted-foreground hover:text-espresso"
+                    }`}
+                  >
+                    <span className="font-display text-2xl sm:text-3xl">{f.name}</span>
+                    {i === active && (
+                      <motion.span
+                        initial={{ opacity: 0, y: 6 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4 }}
+                        className="mt-2 block text-xs leading-relaxed tracking-[0.14em] text-espresso uppercase"
+                      >
+                        {f.desc}
+                      </motion.span>
+                    )}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+type Comfort = {
+  name: string;
+  price: string[];
+  note?: string;
+  img?: string;
+  alt?: string;
+};
+
+const comforts: Comfort[] = [
+  { name: "Roasted Banana Loaf", price: ["40 QAR"], img: bananaLoaf, alt: "Sliced roasted banana loaf on parchment" },
+  {
+    name: "Classic Brownies",
+    price: ["16 pcs / 59 QAR", "8 pcs / 32 QAR"],
+    note: "Assorted or single flavor",
+    img: browniesImg,
+    alt: "Fudgy chocolate brownie squares",
+  },
+  { name: "Brownies on Crunch", price: ["16 pcs / 62 QAR", "8 pcs / 35 QAR"] },
+  { name: "Original Oat Bar", price: ["16 pcs / 59 QAR", "8 pcs / 32 QAR"], img: oatBars, alt: "Stacked oat bars on a plate" },
+  { name: "Oat Dates Bar", price: ["16 pcs / 62 QAR", "8 pcs / 35 QAR"] },
+];
+
+function Comforts() {
+  return (
+    <section className="bg-ivory px-6 py-28 sm:py-40">
+      <div className="mx-auto max-w-6xl">
+        <p className={label}>T H E&nbsp;&nbsp;C O M F O R T S</p>
+        <div className="mt-14 grid gap-x-12 gap-y-16 md:grid-cols-3">
+          {comforts.map((c, i) => (
+            <Reveal key={c.name} delay={(i % 3) * 0.08} className={i === 1 ? "md:pt-16" : ""}>
+              <article>
+                {c.img && (
+                  <img
+                    src={c.img}
+                    alt={c.alt ?? c.name}
+                    width={1000}
+                    height={1200}
+                    loading="lazy"
+                    className="mb-6 aspect-4/5 w-full object-cover"
+                  />
+                )}
+                <h3 className="font-display text-3xl">{c.name}</h3>
+                {c.note && (
+                  <p className="mt-1 text-xs tracking-[0.16em] text-muted-foreground uppercase">
+                    {c.note}
+                  </p>
+                )}
+                <ul className="mt-3 space-y-0.5 text-sm tracking-[0.16em] text-espresso">
+                  {c.price.map((p) => (
+                    <li key={p}>{p}</li>
+                  ))}
+                </ul>
+                <div className="hairline mt-6" />
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LittleThings() {
+  return (
+    <section className="bg-cream px-6 py-28 sm:py-36">
+      <div className="mx-auto max-w-5xl space-y-10">
+        <Reveal direction="left" className="font-display text-3xl sm:text-5xl">
+          <p>Not every comfort needs explaining.</p>
+        </Reveal>
+        <Reveal
+          direction="right"
+          delay={0.1}
+          className="text-right font-display text-3xl text-accent-foreground sm:text-5xl"
+        >
+          <p>
+            Pistachio? Yeah, that&apos;s a{" "}
+            <span style={{ color: "var(--pistachio)" }}>green flag.</span>
+          </p>
+        </Reveal>
+        <Reveal direction="up" delay={0.2} className="font-display text-3xl sm:text-5xl">
+          <p>Brownies? Always a yes.</p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function Distance() {
+  return (
+    <section className="grain bg-beige px-6 py-28 text-center sm:py-40">
+      <div className="mx-auto max-w-3xl">
+        <Reveal as="h2" className="font-display text-5xl sm:text-8xl">
+          BRING ME SOME.
+        </Reveal>
+        <Reveal delay={0.15} className="mt-8 text-lg text-espresso sm:text-xl">
+          <p>Apparently, &ldquo;bring me some&rdquo; has no distance limit!</p>
+        </Reveal>
+        <Reveal delay={0.3} className="mt-4 font-display text-2xl italic sm:text-3xl">
+          <p>L.A., you&apos;re in for a treat.</p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function Connection() {
+  return (
+    <section className="bg-ivory px-6 py-40 text-center sm:py-56">
+      <div className="mx-auto max-w-3xl">
+        <Reveal direction="none" duration={1.6}>
+          <p className="signature-line text-2xl leading-relaxed sm:text-4xl">{SIGNATURE}</p>
+        </Reveal>
+        <Reveal direction="none" duration={1.6} delay={0.5}>
+          <p className="mx-auto mt-14 max-w-xl text-sm leading-loose tracking-[0.12em] text-muted-foreground">
+            D&apos;SAINTS has always been about connecting lives, one moment at a time.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function Invitation() {
+  return (
+    <footer id="contact" className="grain bg-chocolate px-6 py-28 text-ivory sm:py-36">
+      <div className="mx-auto max-w-5xl">
+        <Reveal as="h2" className="font-display text-4xl leading-tight sm:text-7xl">
+          MAKE THE MOMENT COUNT.
+        </Reveal>
+        <Reveal delay={0.15} className="mt-6 text-base text-cream/80 sm:text-lg">
+          <p>Some things are simply better when shared.</p>
+        </Reveal>
+        <Reveal delay={0.3} className="mt-4">
+          <span className="signature-line text-cream/70">{SIGNATURE}</span>
+        </Reveal>
+
+        <div className="mt-14 flex flex-wrap gap-4">
+          <a
+            href="mailto:hello@dsaints.qa?subject=Order%20%2F%20Inquiry"
+            className="rounded-full bg-ivory px-8 py-3.5 text-[0.7rem] tracking-[0.28em] text-chocolate transition-opacity hover:opacity-85"
+          >
+            ORDER / INQUIRE
+          </a>
+          <a
+            href="https://wa.me/97455881795"
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full border border-ivory/40 px-8 py-3.5 text-[0.7rem] tracking-[0.28em] text-ivory transition-colors hover:bg-ivory hover:text-chocolate"
+          >
+            WHATSAPP
+          </a>
+        </div>
+
+        <div className="mt-16 h-px w-full bg-ivory/15" />
+
+        <div className="mt-10 grid gap-8 text-sm text-cream/75 sm:grid-cols-2">
+          <address className="space-y-1 not-italic">
+            <p>Doha, Qatar</p>
+            <p>
+              <a href="tel:+97455881795" className="hover:text-ivory">
+                +974 5588 1795
+              </a>
+            </p>
+            <p>
+              <a href="tel:+97455423214" className="hover:text-ivory">
+                +974 5542 3214
+              </a>
+            </p>
+          </address>
+          <ul className="space-y-1 sm:text-right">
+            <li>
+              <a
+                href="https://instagram.com/dsaints.qa"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-ivory"
+              >
+                Instagram @dsaints.qa
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://facebook.com/DsaintsFood"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-ivory"
+              >
+                Facebook DsaintsFood
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="mt-20 text-center">
+          <p className="font-display text-4xl tracking-[0.14em] sm:text-6xl">D&apos;SAINTS</p>
+          <p className="mt-3 text-[0.65rem] tracking-[0.4em] text-cream/60">EST. 2020</p>
+          <p className="mt-6">
+            <span className="signature-line text-sm text-cream/60">{SIGNATURE}</span>
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 function Index() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <FirstMoment />
+        <Story />
+        <Philosophy />
+        <SignatureCollection />
+        <Cakes />
+        <Favorites />
+        <Comforts />
+        <LittleThings />
+        <Distance />
+        <Connection />
+      </main>
+      <Invitation />
+    </>
   );
 }
