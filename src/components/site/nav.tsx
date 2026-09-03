@@ -9,10 +9,13 @@ const links = [
 export function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
+      <div
+        className="mx-auto mt-3 flex max-w-6xl items-start gap-3 sm:mt-5"
+        style={{ width: "calc(100% - 1.5rem)" }}
+      >
       <nav
         aria-label="Primary"
-        className="mx-auto mt-3 flex max-w-6xl items-center justify-between gap-4 rounded-full border border-border/70 bg-background/75 px-5 py-3 backdrop-blur-md sm:mt-5 sm:px-8 md:mr-[calc(50%-36rem+9.5rem)] md:w-[calc(100%-11rem)] lg:mr-auto"
-        style={{ width: "calc(100% - 1.5rem)" }}
+        className="flex min-w-0 flex-1 items-center justify-between gap-4 rounded-full border border-border/70 bg-background/75 px-5 py-3 backdrop-blur-md sm:px-8"
       >
         <a
           href="#top"
@@ -39,6 +42,8 @@ export function Nav() {
           CONTACT
         </a>
       </nav>
+        <div aria-hidden="true" className="w-[6.5rem] shrink-0 sm:w-[7.5rem]" />
+      </div>
     </header>
   );
 }
