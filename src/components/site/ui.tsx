@@ -28,12 +28,12 @@ export function TwineRule({
 
 /* ---------- Bakery price tickets ---------- */
 
-function splitPrice(raw: string): { label?: string; amount: string } {
+function splitPrice(raw: string): { label: string; amount: string } {
   const slash = raw.split(" / ");
-  if (slash.length === 2) return { label: slash[0], amount: slash[1]! };
+  if (slash.length === 2) return { label: slash[0]!, amount: slash[1]! };
   const solo = raw.match(/^(.*?)\s(\d+\s*QAR)$/);
   if (solo && solo[1]) return { label: solo[1], amount: solo[2]! };
-  return { amount: raw };
+  return { label: "", amount: raw };
 }
 
 export function PriceTicket({ value, tone = "light" }: { value: string; tone?: "light" | "dark" }) {
@@ -132,7 +132,7 @@ export function OrderTag() {
             animate={reduced ? { rotate: 0 } : { rotate: [0, -9, 7, -4, 0] }}
             transition={
               reduced
-                ? undefined
+                ? { duration: 0 }
                 : { duration: 1.1, ease: "easeInOut", delay: 1.2, repeat: 2, repeatDelay: 6 }
             }
             style={{ transformOrigin: "50% 20%" }}
