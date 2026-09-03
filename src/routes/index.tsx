@@ -8,6 +8,7 @@ import { Signature, SIGNATURE } from "@/components/site/signature";
 import { OrderTag, PriceTickets, StampLink, TwineRule, ORDER_HREF } from "@/components/site/ui";
 
 import heroImg from "@/assets/hero.jpg";
+import heroVideo from "@/assets/hero.mp4";
 import story1 from "@/assets/story-1.jpg";
 import story2 from "@/assets/story-2.jpg";
 import story3 from "@/assets/story-3.jpg";
@@ -64,14 +65,28 @@ function Hero() {
       ref={ref}
       className="grain relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-ivory px-6 pt-28 pb-16 text-center"
     >
-      <motion.img
-        src={heroImg}
-        alt="A table of Filipino desserts in warm morning light"
-        width={1600}
-        height={1100}
-        style={{ y }}
-        className="pointer-events-none absolute inset-0 h-[115%] w-full object-cover opacity-25"
-      />
+      {reduced ? (
+        <motion.img
+          src={heroImg}
+          alt="A table of Filipino desserts in warm morning light"
+          width={1600}
+          height={1100}
+          style={{ y }}
+          className="pointer-events-none absolute inset-0 h-[115%] w-full object-cover opacity-25"
+        />
+      ) : (
+        <motion.video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster={heroImg}
+          src={heroVideo}
+          style={{ y }}
+          className="pointer-events-none absolute inset-0 h-[115%] w-full object-cover opacity-25"
+          aria-hidden="true"
+        />
+      )}
       <motion.div style={{ opacity: fade }} className="relative z-[2] max-w-4xl">
         <motion.p
           className={label}
