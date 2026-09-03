@@ -116,8 +116,11 @@ export function StampLink({
 export function OrderTag() {
   const reduced = useReducedMotion();
   return (
-    <div className="pointer-events-none fixed inset-x-0 top-3 z-[60] sm:top-5">
-      <div className="mx-auto flex max-w-6xl justify-end" style={{ width: "calc(100% - 1.5rem)" }}>
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-[60]">
+      <div
+        className="mx-auto mt-3 flex max-w-6xl items-start justify-end gap-3 sm:mt-5"
+        style={{ width: "calc(100% - 1.5rem)" }}
+      >
         <a
           href={ORDER_HREF}
           className="pointer-events-auto group inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/75 px-5 py-3 text-[0.62rem] tracking-[0.26em] text-foreground uppercase backdrop-blur-md transition-colors hover:bg-foreground hover:text-background focus-visible:outline-2 focus-visible:outline-offset-3"
@@ -138,6 +141,6 @@ export function OrderTag() {
           Order
         </a>
       </div>
-    </div>
+    </header>
   );
 }

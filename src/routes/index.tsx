@@ -65,28 +65,17 @@ function Hero() {
       ref={ref}
       className="grain relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-ivory px-6 pt-28 pb-16 text-center"
     >
-      {reduced ? (
-        <motion.img
-          src={heroImg}
-          alt="A table of Filipino desserts in warm morning light"
-          width={1600}
-          height={1100}
-          style={{ y }}
-          className="pointer-events-none absolute inset-0 h-[115%] w-full object-cover opacity-25"
-        />
-      ) : (
-        <motion.video
-          autoPlay
-          loop
-          muted
-          playsInline
-          poster={heroImg}
-          src={heroVideo}
-          style={{ y }}
-          className="pointer-events-none absolute inset-0 h-[115%] w-full object-cover opacity-25"
-          aria-hidden="true"
-        />
-      )}
+      <motion.video
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster={heroImg}
+        src={heroVideo}
+        style={{ y }}
+        className="pointer-events-none absolute inset-0 h-[115%] w-full object-cover opacity-25"
+        aria-hidden="true"
+      />
       <motion.div style={{ opacity: fade }} className="relative z-[2] max-w-4xl">
         <motion.p
           className={label}
