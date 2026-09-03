@@ -8,6 +8,7 @@ import { Signature, SIGNATURE } from "@/components/site/signature";
 import { OrderTag, PriceTickets, StampLink, TwineRule, ORDER_HREF } from "@/components/site/ui";
 
 import heroImg from "@/assets/hero.jpg";
+import heroVideo from "@/assets/hero.mp4";
 import story1 from "@/assets/story-1.jpg";
 import story2 from "@/assets/story-2.jpg";
 import story3 from "@/assets/story-3.jpg";

@@ -120,11 +120,7 @@ export function OrderTag() {
       <div className="mx-auto flex max-w-6xl justify-end" style={{ width: "calc(100% - 1.5rem)" }}>
         <a
           href={ORDER_HREF}
-          className="pointer-events-auto group inline-flex items-center gap-2 bg-chocolate px-4 py-2.5 text-[0.62rem] tracking-[0.26em] text-ivory uppercase transition-colors hover:bg-espresso focus-visible:outline-2 focus-visible:outline-offset-3 sm:px-5 sm:py-3"
-          style={{
-            borderRadius: "3px",
-            boxShadow: "inset 0 0 0 1px var(--ivory), inset 0 0 0 2px var(--chocolate)",
-          }}
+          className="pointer-events-auto group inline-flex items-center gap-2 rounded-full border border-border/70 bg-background/75 px-5 py-3 text-[0.62rem] tracking-[0.26em] text-foreground uppercase backdrop-blur-md transition-colors hover:bg-foreground hover:text-background focus-visible:outline-2 focus-visible:outline-offset-3"
         >
           <motion.span
             className="inline-flex"
