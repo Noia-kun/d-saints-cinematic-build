@@ -201,3 +201,29 @@
   width: 100%;
   background-color: var(--border);
 }
+
+/* Recipe-card note tag */
+@utility note-card {
+  position: relative;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background-color: var(--cream);
+  border: 1px solid color-mix(in oklab, var(--espresso) 28%, transparent);
+  border-radius: 2px;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 1.65rem,
+    color-mix(in oklab, var(--espresso) 8%, transparent) 1.65rem 1.7rem
+  );
+}
+
+@utility note-card-tab {
+  position: absolute;
+  top: -0.6rem;
+  left: 1rem;
+  padding: 0.15rem 0.55rem;
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+  font-size: 0.55rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}

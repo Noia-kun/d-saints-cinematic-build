@@ -5,6 +5,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import { Nav } from "@/components/site/nav";
 import { Reveal, StaggerList, ProductImage } from "@/components/site/reveal";
 import { Signature, SIGNATURE } from "@/components/site/signature";
+import { OrderTag, PriceTickets, StampLink, TwineRule, ORDER_HREF } from "@/components/site/ui";
 
 import heroImg from "@/assets/hero.jpg";
 import story1 from "@/assets/story-1.jpg";
@@ -148,7 +149,7 @@ function Story() {
             </p>
           </Reveal>
           <Reveal delay={0.3} className="mt-10">
-            <div className="hairline max-w-[8rem]" />
+            <TwineRule />
           </Reveal>
         </div>
 
@@ -261,11 +262,7 @@ function SignatureCollection() {
                   <p className="mt-6 max-w-md text-xs leading-relaxed tracking-[0.14em] text-espresso">
                     {it.copy}
                   </p>
-                  <ul className="mt-8 space-y-1 text-sm tracking-[0.16em] text-foreground">
-                    {it.price.map((p) => (
-                      <li key={p}>{p}</li>
-                    ))}
-                  </ul>
+                  <PriceTickets prices={it.price} className="mt-8" />
                 </div>
               </article>
             ))}
@@ -290,11 +287,7 @@ function SignatureCollection() {
               <p className="mt-4 text-xs leading-relaxed tracking-[0.14em] text-espresso">
                 {it.copy}
               </p>
-              <ul className="mt-6 space-y-1 text-sm tracking-[0.16em]">
-                {it.price.map((p) => (
-                  <li key={p}>{p}</li>
-                ))}
-              </ul>
+              <PriceTickets prices={it.price} className="mt-6" />
             </article>
           ))}
         </div>
@@ -323,7 +316,7 @@ function Cakes() {
               A RICH CHOCOLATE INDULGENCE WITH LAYERS OF TEXTURE, BALANCING SILKY, CREAMY, AND CRISP
               IN EVERY BITE.
             </p>
-            <p className="mt-6 text-sm tracking-[0.2em]">65 / 25 / 120 QAR</p>
+            <PriceTickets prices={["65 QAR", "25 QAR", "120 QAR"]} className="mt-6" />
           </article>
 
           <article className="md:pt-24">
@@ -339,11 +332,14 @@ function Cakes() {
               DELICATE LAYERS OF CASHEW MERINGUE AND BUTTERCREAM, FINISHED WITH ROASTED CASHEWS. A
               FILIPINO CLASSIC WITHOUT RIVAL.
             </p>
-            <p className="mt-6 text-sm tracking-[0.2em]">70 / 45 / 150 QAR</p>
-            <Reveal delay={0.2} className="mt-8 border-l border-accent pl-5">
-              <p className="font-display text-xl italic text-espresso">
-                Did you know? Sans Rival means &ldquo;without rival.&rdquo;
-              </p>
+            <PriceTickets prices={["70 QAR", "45 QAR", "150 QAR"]} className="mt-6" />
+            <Reveal delay={0.2} className="mt-8 max-w-md">
+              <div className="note-card">
+                <span className="note-card-tab">note</span>
+                <p className="font-display text-xl italic text-espresso">
+                  Did you know? Sans Rival means &ldquo;without rival.&rdquo;
+                </p>
+              </div>
             </Reveal>
           </article>
         </div>
@@ -396,9 +392,7 @@ function Favorites() {
         <Reveal as="h2" className="mt-8 font-display text-5xl sm:text-7xl">
           NEW YORK COOKIES
         </Reveal>
-        <p className="mt-5 text-sm tracking-[0.2em] text-espresso">
-          Solo 12 QAR · 3 pcs 35 QAR · 5 pcs 55 QAR
-        </p>
+        <PriceTickets prices={["Solo 12 QAR", "3 pcs 35 QAR", "5 pcs 55 QAR"]} className="mt-5" />
 
         <div className="mt-16 grid gap-12 md:grid-cols-2 md:items-center">
           <div className="overflow-hidden bg-beige/40">
@@ -426,11 +420,25 @@ function Favorites() {
                     onMouseEnter={() => setActive(i)}
                     onFocus={() => setActive(i)}
                     aria-pressed={i === active}
-                    className={`w-full py-5 text-left transition-colors ${
+                    className={`relative w-full py-5 pl-6 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 ${
                       i === active ? "text-foreground" : "text-muted-foreground hover:text-espresso"
                     }`}
                   >
+                    <span
+                      aria-hidden="true"
+                      className={`absolute top-5 left-0 h-7 w-[3px] transition-opacity ${
+                        i === active ? "bg-espresso opacity-100" : "opacity-0"
+                      }`}
+                    />
                     <span className="font-display text-2xl sm:text-3xl">{f.name}</span>
+                    {i === active && (
+                      <span
+                        aria-hidden="true"
+                        className="ml-3 inline-block translate-y-[-0.35em] border-b border-espresso pb-1 text-[0.55rem] tracking-[0.28em] text-espresso uppercase"
+                      >
+                        selected
+                      </span>
+                    )}
                     {i === active && (
                       <motion.span
                         initial={{ opacity: 0, y: 6 }}
@@ -499,12 +507,8 @@ function Comforts() {
                     {c.note}
                   </p>
                 )}
-                <ul className="mt-3 space-y-0.5 text-sm tracking-[0.16em] text-espresso">
-                  {c.price.map((p) => (
-                    <li key={p}>{p}</li>
-                  ))}
-                </ul>
-                <div className="hairline mt-6" />
+                <PriceTickets prices={c.price} className="mt-3" />
+                <TwineRule className="mt-6" width="5rem" />
               </article>
             </Reveal>
           ))}
@@ -589,23 +593,13 @@ function Invitation() {
         </Reveal>
 
         <div className="mt-14 flex flex-wrap gap-4">
-          <a
-            href="mailto:hello@dsaints.qa?subject=Order%20%2F%20Inquiry"
-            className="rounded-full bg-ivory px-8 py-3.5 text-[0.7rem] tracking-[0.28em] text-chocolate transition-opacity hover:opacity-85"
-          >
-            ORDER / INQUIRE
-          </a>
-          <a
-            href="https://wa.me/97455881795"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full border border-ivory/40 px-8 py-3.5 text-[0.7rem] tracking-[0.28em] text-ivory transition-colors hover:bg-ivory hover:text-chocolate"
-          >
+          <StampLink href={ORDER_HREF}>ORDER / INQUIRE</StampLink>
+          <StampLink href="https://wa.me/97455881795" variant="outline" external>
             WHATSAPP
-          </a>
+          </StampLink>
         </div>
 
-        <div className="mt-16 h-px w-full bg-ivory/15" />
+        <TwineRule className="mt-16" tone="ivory" width="10rem" />
 
         <div className="mt-10 grid gap-8 text-sm text-cream/75 sm:grid-cols-2">
           <address className="space-y-1 not-italic">
@@ -661,6 +655,7 @@ function Index() {
   return (
     <>
       <Nav />
+      <OrderTag />
       <main>
         <Hero />
         <FirstMoment />
