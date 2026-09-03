@@ -37,7 +37,8 @@ export function Nav() {
         </ul>
         <a
           href="#contact"
-          className="rounded-full border border-foreground/25 px-4 py-1.5 text-[0.62rem] tracking-[0.26em] text-foreground transition-colors hover:bg-foreground hover:text-background md:hidden"
+          className="border border-foreground/30 px-3 py-1.5 text-[0.58rem] tracking-[0.24em] text-foreground transition-colors hover:bg-foreground hover:text-background focus-visible:outline-2 focus-visible:outline-offset-3 md:hidden"
+          style={{ borderRadius: "3px" }}
         >
           CONTACT
         </a>
