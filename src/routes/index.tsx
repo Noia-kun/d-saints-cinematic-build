@@ -655,6 +655,7 @@ function Index() {
   return (
     <>
       <Nav />
+      <OrderTag />
       <main>
         <Hero />
         <FirstMoment />
