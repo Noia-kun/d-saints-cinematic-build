@@ -160,6 +160,16 @@ function Story() {
         <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:col-span-7">
           <Reveal className="col-span-1 row-span-2 self-start">
             <img
+              src={story3}
+              alt="Coffee cup and a cookie being dipped"
+              width={1236}
+              height={2048}
+              loading="lazy"
+              className="w-full object-cover"
+            />
+          </Reveal>
+          <Reveal delay={0.15} className="col-span-1 mt-10">
+            <img
               src={story1}
               alt="Hands passing a plate of dessert across a shared table"
               width={900}
@@ -168,22 +178,12 @@ function Story() {
               className="w-full object-cover"
             />
           </Reveal>
-          <Reveal delay={0.15} className="col-span-1 mt-10">
-            <img
-              src={story2}
-              alt="A dessert box being opened, pastries inside"
-              width={1200}
-              height={900}
-              loading="lazy"
-              className="w-full object-cover"
-            />
-          </Reveal>
           <Reveal delay={0.3} className="col-span-1 pr-8">
             <img
-              src={story3}
-              alt="Coffee cups and crumbs left on the table after a gathering"
-              width={1000}
-              height={1000}
+              src={story2}
+              alt="A dessert box wrapped in plastic, pastries inside"
+              width={1200}
+              height={900}
               loading="lazy"
               className="w-full object-cover"
             />
