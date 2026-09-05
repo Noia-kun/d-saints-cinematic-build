@@ -23,6 +23,8 @@ import cookiePistachio from "@/assets/cookie-pistachio.jpg";
 import cookieBerry from "@/assets/cookie-berry.jpg";
 import bananaLoaf from "@/assets/banana-loaf.jpg";
 import browniesImg from "@/assets/brownies.jpg";
+import browniesOnCrunchImg from "@/assets/brownies-crunch.jpg";
+import oatDatesBar from "@/assets/oat-dates-bar.jpg";
 import oatBars from "@/assets/oat-bars.jpg";
 
 export const Route = createFileRoute("/")({
@@ -481,9 +483,9 @@ const comforts: Comfort[] = [
     img: browniesImg,
     alt: "Fudgy chocolate brownie squares",
   },
-  { name: "Brownies on Crunch", price: ["16 pcs / 62 QAR", "8 pcs / 35 QAR"] },
+  { name: "Brownies on Crunch", price: ["16 pcs / 62 QAR", "8 pcs / 35 QAR"], img: browniesOnCrunchImg, alt: "Brownies on a crunchy base" },
   { name: "Original Oat Bar", price: ["16 pcs / 59 QAR", "8 pcs / 32 QAR"], img: oatBars, alt: "Stacked oat bars on a plate" },
-  { name: "Oat Dates Bar", price: ["16 pcs / 62 QAR", "8 pcs / 35 QAR"] },
+  { name: "Oat Dates Bar", price: ["16 pcs / 62 QAR", "8 pcs / 35 QAR"], img: oatDatesBar, alt: "Oat and dates bar" },
 ];
 
 function Comforts() {
